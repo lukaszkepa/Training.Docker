@@ -1,0 +1,12 @@
+sudo docker build --rm -t dockercourse:mongodbimage .
+mkdir ~/MongoDB
+mkdir ~/MongoDB/databases
+mkdir ~/MongoDB/imports
+sudo docker run --name mongo01 -d -it -p 27017:27017 -v ~/MongoDB/databases:/folder_for_dbs dockercourse:mongodbimage
+--To get running container IP address run following command, replace CONTAINER_ID with desired container identifier
+sudo docker inspect CONTAINER_ID
+--mongodb-clients package provides tools for MongoDB interaction including mongoimport
+sudo apt install mongodb-clients
+cp ./Training.Docker/Training.Docker.DockerFiles/MongoDB/Utils/data.json ~/MongoDB/imports/data.json
+--Replace IP_ADDRESS with the value received from "docker inspect" command
+mongoimport -h IP_ADDRESS -d DockerCourseDb -c Orders --file ~/MongoDB/imports/data.json

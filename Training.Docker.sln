@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Training.Docker.QueryServic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Training.Docker.DataCollectorService", "Training.Docker.DataCollectorService\Training.Docker.DataCollectorService.csproj", "{6240605E-4671-4374-8A55-39DAA38DAEDD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Training.Docker.CommonLibs", "Training.Docker.CommonLibs\Training.Docker.CommonLibs.csproj", "{89082EB5-BB07-4206-8D00-F4EF66A8737E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{6240605E-4671-4374-8A55-39DAA38DAEDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6240605E-4671-4374-8A55-39DAA38DAEDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6240605E-4671-4374-8A55-39DAA38DAEDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89082EB5-BB07-4206-8D00-F4EF66A8737E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89082EB5-BB07-4206-8D00-F4EF66A8737E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89082EB5-BB07-4206-8D00-F4EF66A8737E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89082EB5-BB07-4206-8D00-F4EF66A8737E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
