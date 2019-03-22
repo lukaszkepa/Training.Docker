@@ -1,74 +1,49 @@
-﻿using System;
-using System.Linq;
+﻿using MongoDB.Driver;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using MongoDB.Bson;
-using MongoDB.Bson.IO;
-using MongoDB.Driver;
-using Newtonsoft.Json.Bson;
-using Newtonsoft.Json.Linq;
+using Training.Docker.Models;
 
 namespace Training.Docker.CommonLibs.MongoDbDAL
 {
-    public class Repository
+    public class Repository<T> : IRepository<T> where T : IIdentified
     {
-        private string _db = String.Empty;
-        private string _collection = String.Empty;
-        private MongoClient _mongoClient = null;
-        public Repository(string host, string port, string db, string collection)
-        {
-            this._db = db;
-            this._collection = collection;
-            string url = String.Format("mongodb://{0}:{1}", host, port);
-            this._mongoClient = new MongoClient(url);
+        private readonly IMongoDatabase _database = null;
+        private IMongoCollection<T> _collection = null;
 
+        public Repository(string connectionString, string databaseName, string collectionName)
+        {
+            var client = new MongoClient(connectionString);
+            _database = client.GetDatabase(databaseName);
+            _collection = _database.GetCollection<T>(collectionName);
         }
 
-        public async Task<JObject> GetJsonObjectById(string jsonObjectId)
+        public async Task<IEnumerable<T>> GetAsync()
         {
-            JObject result = null;
-            if (this._mongoClient != null)
-            {
-                var db = this._mongoClient.GetDatabase(this._db);
-                if (db != null)
-                {
-                    var collection = db.GetCollection<BsonDocument>(this._collection);
-                    if (collection != null)
-                    {
-                        var builder = Builders<BsonDocument>.Filter;
-                        var filter = builder.Eq("_id", ObjectId.Parse(jsonObjectId));
-                        IAsyncCursor<BsonDocument> cursor = await collection.FindAsync<BsonDocument>(filter);
-                        if (await cursor.MoveNextAsync())
-                        {
-                            BsonDocument bsonDocument = cursor.Current.ElementAt(0);
-                            if (bsonDocument != null)
-                            {
-                                string json = bsonDocument.ToJson(new JsonWriterSettings() { OutputMode = JsonOutputMode.Strict });
-                                result = JObject.Parse(json);
-                            }
-                        }
-                    }
-                }
-            }
-
-            return result;
+            var result = await _collection.FindAsync(d => true);
+            return await result.ToListAsync();
         }
 
-        public async Task SaveJsonObject(JObject jObject)
+        public async Task<T> GetAsync(string id)
         {
-            if (this._mongoClient != null)
-            {
-                var db = this._mongoClient.GetDatabase(this._db);
-                if (db != null)
-                {
-                    var collection = db.GetCollection<BsonDocument>(this._collection);
-                    if (collection != null)
-                    {
-                        string json = jObject.ToString();
-                        BsonDocument bsonDocument = BsonDocument.Parse(json);
-                        await collection.InsertOneAsync(bsonDocument);
-                    }
-                }
-            }
-        }        
+            var result = await _collection.FindAsync(d => d.Id == id);
+            return await result.FirstOrDefaultAsync();
+        }
+
+        public async Task<T> CreateAsync(T document)
+        {
+            await _collection.InsertOneAsync(document);
+            return document;
+        }
+
+        public async Task UpdateAsync(string id, T document)
+        {
+            document.Id = id;
+            await _collection.ReplaceOneAsync(d => d.Id == id, document);
+        }
+
+        public async Task RemoveAsync(string id)
+        {
+            await _collection.DeleteOneAsync(d => d.Id == id);
+        }
     }
 }
