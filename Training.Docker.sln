@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Training.Docker.UI", "Training.Docker.UI\Training.Docker.UI.csproj", "{7768AC5E-0818-45D3-A060-4B1548C230D1}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Training.Docker.API", "Training.Docker.API\Training.Docker.API.csproj", "{4DD4D376-3094-4327-B9C2-365125B4419E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Training.Docker.CommandService", "Training.Docker.CommandService\Training.Docker.CommandService.csproj", "{477B18E0-C9D7-4176-8B21-F8A733DAE7C6}"
@@ -23,10 +21,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7768AC5E-0818-45D3-A060-4B1548C230D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7768AC5E-0818-45D3-A060-4B1548C230D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7768AC5E-0818-45D3-A060-4B1548C230D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7768AC5E-0818-45D3-A060-4B1548C230D1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4DD4D376-3094-4327-B9C2-365125B4419E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4DD4D376-3094-4327-B9C2-365125B4419E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DD4D376-3094-4327-B9C2-365125B4419E}.Release|Any CPU.ActiveCfg = Release|Any CPU
