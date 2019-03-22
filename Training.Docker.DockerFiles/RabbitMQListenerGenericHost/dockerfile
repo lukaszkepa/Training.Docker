@@ -1,0 +1,13 @@
+FROM microsoft/dotnet:aspnetcore-runtime
+
+RUN mkdir /RabbitMQListenerGenericHost
+RUN mkdir /RabbitMQListenerGenericHost/logs
+RUN mkdir /RabbitMQListenerGenericHost/config
+
+VOLUME ["/RabbitMQListenerGenericHost/logs"]
+VOLUME ["/RabbitMQListenerGenericHost/config"]
+
+ADD ./* /RabbitMQListenerGenericHost/
+
+WORKDIR /RabbitMQListenerGenericHost
+ENTRYPOINT ["dotnet", "Training.Docker.FromCommandToQueryPartNotificationService.dll"]
