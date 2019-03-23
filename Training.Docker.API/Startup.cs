@@ -1,24 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Rebus.Routing.TypeBased;
+using Rebus.Config;
 using Rebus.ServiceProvider;
-using Rebus.Transport.InMem;
-using Training.Docker.API.Services;
 using Swashbuckle.AspNetCore.Swagger;
+using System.Reflection;
+using Training.Docker.API.Services;
 using Training.Docker.API.Settings;
-using Training.Docker.Models;
 
 namespace Training.Docker.API
 {
@@ -34,14 +25,17 @@ namespace Training.Docker.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var inputQueueName = Assembly.GetExecutingAssembly().GetName().Name;
-
             services.AddOptions()
-                .Configure<MongoDbSettings>(Configuration.GetSection("MongoDB"));
+                .Configure<MongoDbSettings>(Configuration.GetSection("MongoDB"))
+                .Configure<RabbitMqSettings>(Configuration.GetSection("RabbitMQ"));
 
-            services.AddRebus(conf =>
+            services.AddRebus((conf, provider) =>
             {
-                conf.Transport(t => t.UseInMemoryTransport(new InMemNetwork(true), inputQueueName));
+                var settings = provider.GetRequiredService<IOptions<RabbitMqSettings>>();
+                var inputQueueName = settings.Value.QueueName ?? Assembly.GetExecutingAssembly().GetName().Name;
+
+                conf.Logging(log => log.Serilog())
+                    .Transport(t => t.UseRabbitMq(settings.Value.ConnectionString, inputQueueName));
                 return conf;
             });
 
