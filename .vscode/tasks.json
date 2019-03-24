@@ -10,6 +10,20 @@
                 "${workspaceFolder}/Training.Docker.API/Training.Docker.API.csproj"
             ],
             "problemMatcher": "$msCompile"
-        }
+        },
+        {
+            "label": "build_debug_Training.Docker.FromCommandToQueryPartNotificationService",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/Training.Docker.FromCommandToQueryPartNotificationService/Training.Docker.FromCommandToQueryPartNotificationService.csproj"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }        
     ]
 }
