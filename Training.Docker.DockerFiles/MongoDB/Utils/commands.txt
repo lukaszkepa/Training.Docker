@@ -10,3 +10,6 @@ sudo apt install mongodb-clients
 cp ./Training.Docker/Training.Docker.DockerFiles/MongoDB/Utils/data.json ~/MongoDB/imports/data.json
 --Replace IP_ADDRESS with the value received from "docker inspect" command
 mongoimport -h IP_ADDRESS -d DockerCourseDb -c Orders --file ~/MongoDB/imports/data.json
+
+
+sudo docker build --rm -t dockercourse:mongodbimage_dataseed .
