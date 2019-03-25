@@ -47,7 +47,7 @@ namespace Training.Docker.CommonLibs.RabbitMQDAL
 
         public void StartListeningForMessages(Action<JObject> messageHandler)
         {
-            if (this._isInstantiatedCorrectly)
+            if ((this._isInstantiatedCorrectly) && (!this._isDisposed))
             {
                 var consumer = new EventingBasicConsumer(this._channel);
                 consumer.Received += (cons, eventArgs) => {

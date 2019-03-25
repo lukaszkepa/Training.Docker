@@ -1,0 +1,6 @@
+// Create network
+
+docker network create training-net
+
+docker build -t training-api -f Training.Docker.API/Dockerfile .
+docker container run -a STDOUT -p 5001:80 --env-file dev.env --name training-api01 --network training-net training-api

@@ -8,7 +8,7 @@ namespace Training.Docker.CommonLibs.RabbitMQDAL
     {
         protected IConnection _conn = null;
         protected IModel _channel = null;
-        private bool _isDisposed = false;
+        protected bool _isDisposed = false;
 
         protected void Dispose(bool isExpliciteInvoked)
         {

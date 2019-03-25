@@ -41,7 +41,7 @@ namespace Training.Docker.CommonLibs.RabbitMQDAL
 
         public void SendMessageToRabbitMQ(JObject message, string messageKey)
         {
-            if (this._isInstantiatedCorrectly)
+            if ((this._isInstantiatedCorrectly) && (!this._isDisposed))
             {
                 MemoryStream ms = null;
                 try
