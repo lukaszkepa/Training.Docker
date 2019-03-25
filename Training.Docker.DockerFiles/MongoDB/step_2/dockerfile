@@ -1,0 +1,10 @@
+FROM dockercourse:mongodbimage
+
+RUN mkdir -p /folder_for_imports
+ADD ./Utils/data.json /folder_for_imports
+ADD ./Utils/wait-for-mongo.sh /folder_for_imports
+
+RUN chmod 700 /folder_for_imports/wait-for-mongo.sh
+RUN /folder_for_imports/wait-for-mongo.sh
+RUN /usr/bin/mongoimport --host=172.17.0.2 -d DockerCourseDb -c Orders --file /folder_for_imports/data.json
+

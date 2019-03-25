@@ -1,0 +1,9 @@
+FROM dockercourse:sqlserverimage
+
+RUN mkdir -p /folder_for_imports
+ADD ./Utils/wait-for-sqlserver.sh /folder_for_imports
+ADD ./Utils/CreateDockrCourseDb.sql /folder_for_imports
+
+RUN chmod 700 /folder_for_imports/wait-for-sqlserver.sh
+RUN /folder_for_imports/wait-for-sqlserver.sh
+RUN /opt/mssql-tools/bin/sqlcmd -S 172.17.0.2 -U sa -P Passw@rd -i /folder_for_imports/CreateDockrCourseDb.sql

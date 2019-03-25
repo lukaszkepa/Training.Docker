@@ -45,14 +45,19 @@ namespace Training.Docker.CommonLibs.RabbitMQDAL
 
         protected void ConnectWithExchange(IModel channel, string exchangeName)
         {
-            channel.ExchangeDeclare(exchangeName, ExchangeType.Direct);
+            if (!String.IsNullOrEmpty(exchangeName))
+                channel.ExchangeDeclare(exchangeName, ExchangeType.Direct);
         }
 
         protected void ConnectWithQueue(IModel channel, string exchangeName, string queueName, string messageKey)
         {
-            channel.ExchangeDeclare(exchangeName, ExchangeType.Direct);
+            if (!String.IsNullOrEmpty(exchangeName))
+                channel.ExchangeDeclare(exchangeName, ExchangeType.Direct);
+
             channel.QueueDeclare(queueName, true, false, false, null);
-            channel.QueueBind(queueName, exchangeName, messageKey);
-        }         
+
+            if (!String.IsNullOrEmpty(exchangeName))
+                channel.QueueBind(queueName, exchangeName, messageKey);
+        }                  
     }
 }
