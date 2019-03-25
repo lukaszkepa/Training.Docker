@@ -1,4 +1,4 @@
 sudo docker build --rm -t dockercourse:sqlserverimage .
-sudo docker run --name sql01 -d -p 1433:1433 -v ~/SqlServer/databases/:/folder_for_dbs dockercourse:sqlserverimage
+sudo docker run --name sql01 -d -p 1433:1433 -v ~/SqlServer/databases/:/folder_for_dbs --network training-net --network-alias sql01host dockercourse:sqlserverimage
 
 sudo docker build --rm -t dockercourse:sqlserverimage_dataseed .

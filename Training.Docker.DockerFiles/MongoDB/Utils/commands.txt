@@ -2,6 +2,7 @@ sudo docker build --rm -t dockercourse:mongodbimage .
 mkdir ~/MongoDB
 mkdir ~/MongoDB/databases
 mkdir ~/MongoDB/imports
+sudo docker run --name mongo01 -d -it -p 27017:27017 -v ~/MongoDB/databases:/folder_for_dbs --network training-net --network-alias mongo01host dockercourse:mongodbimage
 sudo docker run --name mongo01 -d -it -p 27017:27017 -v ~/MongoDB/databases:/folder_for_dbs dockercourse:mongodbimage
 --To get running container IP address run following command, replace CONTAINER_ID with desired container identifier
 sudo docker inspect CONTAINER_ID
