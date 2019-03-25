@@ -13,9 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Training.Docker.DataCollect
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Training.Docker.CommonLibs", "Training.Docker.CommonLibs\Training.Docker.CommonLibs.csproj", "{89082EB5-BB07-4206-8D00-F4EF66A8737E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Training.Docker.Models", "Training.Docker.Models\Training.Docker.Models.csproj", "{AB6D876B-AE35-4ACE-863B-439BC51FBA6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Training.Docker.Models", "Training.Docker.Models\Training.Docker.Models.csproj", "{AB6D876B-AE35-4ACE-863B-439BC51FBA6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Training.Docker.FromCommandToQueryPartNotificationService", "Training.Docker.FromCommandToQueryPartNotificationService\Training.Docker.FromCommandToQueryPartNotificationService.csproj", "{6228B3B4-0A47-4E96-9CD8-8446E5BB1CB7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Training.Docker.FromCommandToQueryPartNotificationService", "Training.Docker.FromCommandToQueryPartNotificationService\Training.Docker.FromCommandToQueryPartNotificationService.csproj", "{6228B3B4-0A47-4E96-9CD8-8446E5BB1CB7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Training.Docker.RaportAPI", "Training.Docker.RaportAPI\Training.Docker.RaportAPI.csproj", "{C343638B-ECBC-49F4-A239-0F3A3FDAEFE4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,14 +45,18 @@ Global
 		{89082EB5-BB07-4206-8D00-F4EF66A8737E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89082EB5-BB07-4206-8D00-F4EF66A8737E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89082EB5-BB07-4206-8D00-F4EF66A8737E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6228B3B4-0A47-4E96-9CD8-8446E5BB1CB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6228B3B4-0A47-4E96-9CD8-8446E5BB1CB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6228B3B4-0A47-4E96-9CD8-8446E5BB1CB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6228B3B4-0A47-4E96-9CD8-8446E5BB1CB7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AB6D876B-AE35-4ACE-863B-439BC51FBA6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AB6D876B-AE35-4ACE-863B-439BC51FBA6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB6D876B-AE35-4ACE-863B-439BC51FBA6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB6D876B-AE35-4ACE-863B-439BC51FBA6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6228B3B4-0A47-4E96-9CD8-8446E5BB1CB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6228B3B4-0A47-4E96-9CD8-8446E5BB1CB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6228B3B4-0A47-4E96-9CD8-8446E5BB1CB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6228B3B4-0A47-4E96-9CD8-8446E5BB1CB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C343638B-ECBC-49F4-A239-0F3A3FDAEFE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C343638B-ECBC-49F4-A239-0F3A3FDAEFE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C343638B-ECBC-49F4-A239-0F3A3FDAEFE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C343638B-ECBC-49F4-A239-0F3A3FDAEFE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
