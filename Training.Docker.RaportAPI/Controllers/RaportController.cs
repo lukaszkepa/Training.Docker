@@ -7,8 +7,9 @@ using Training.Docker.RaportAPI.Data;
 
 namespace Training.Docker.RaportAPI.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+
+    [Route("api/Raport")]
     public class RaportController : ControllerBase
     {
         readonly ApiContext context;
@@ -17,36 +18,43 @@ namespace Training.Docker.RaportAPI.Controllers
             this.context = context;
         }
 
-        // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<IEnumerable<OrdersAggregatedData>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return context.OrdersAggregatedData;
         }
 
-        // GET api/values/5
+
         [HttpGet("{customer}")]
-        public ActionResult<IEnumerable<OrdersAggregatedData>> Get(string customer)
+        [Route("ByCustomer/{customer}")]
+        public ActionResult<IEnumerable<OrdersAggregatedData>> GetByCustomer(string customer)
         {
-           return context.OrdersAggregatedData.Where(e=>e.CustomerName == customer).ToList();
+            return context.OrdersAggregatedData
+                 .Where(e => e.CustomerName == customer)
+                 .GroupBy(e => e.CustomerName, (c, v) => new OrdersAggregatedData()
+                 {
+                     Id = 0,
+                     CustomerName = c,
+                     OrderPlacementDate = v.Max(e => e.OrderPlacementDate),
+                     TotalPrice = v.Sum(e => e.TotalPrice)
+                 }
+               ).ToList();
         }
 
-        //// POST api/values
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
-
-        //// PUT api/values/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        //// DELETE api/values/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        [HttpGet("{date}")]
+        [Route("ByDate/{date}")]
+        public ActionResult<IEnumerable<OrdersAggregatedData>> Get(DateTime date)
+        {
+            return context.OrdersAggregatedData
+                 .Where(e => e.OrderPlacementDate.ToShortDateString() == date.ToShortDateString())
+                 .GroupBy(e => e.Date, (d, v) => new OrdersAggregatedData()
+                 {
+                     Id = 0,
+                     CustomerName = "All",
+                     OrderPlacementDate = d,
+                     TotalPrice = v.Sum(e => e.TotalPrice)
+                 }
+               ).ToList();
+        }
     }
 }

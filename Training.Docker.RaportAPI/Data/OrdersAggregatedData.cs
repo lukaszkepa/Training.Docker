@@ -10,5 +10,7 @@ namespace Training.Docker.RaportAPI.Data
         public string CustomerName { get; set; }
         public DateTime OrderPlacementDate { get; set; }
         public decimal TotalPrice { get; set; }
+
+        internal DateTime Date => new DateTime(OrderPlacementDate.Year, OrderPlacementDate.Month, OrderPlacementDate.Day);
     }
 }
