@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.Swagger;
 using Training.Docker.RaportAPI.Data;
 
 namespace Training.Docker.RaportAPI
@@ -28,8 +22,10 @@ namespace Training.Docker.RaportAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApiContext>(cfg =>
-                cfg.UseSqlServer("server=.\\sqlexpress;Database=DockerCourseDb;Integrated Security=true;MultipleActiveResultSets=true;")
+                cfg.UseSqlServer(Configuration.GetSection("SqlServer").GetValue<string>("ConnectionString"))
             );
+            services.AddSwaggerGen(s => s.SwaggerDoc("v1", new Info { Title = "Docker Training Report API", Version = "v1" }));
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -40,13 +36,10 @@ namespace Training.Docker.RaportAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseHsts();
-            }
-
-            app.UseHttpsRedirection();
             app.UseMvc();
+
+            app.UseSwagger()
+               .UseSwaggerUI(s => s.SwaggerEndpoint("/swagger/v1/swagger.json", "Docker Training Report API"));
         }
     }
 }

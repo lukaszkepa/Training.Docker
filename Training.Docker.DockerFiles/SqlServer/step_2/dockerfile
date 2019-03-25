@@ -1,4 +1,4 @@
-FROM dockercourse:sqlserverimage
+FROM training-sqlserver:latest
 
 ADD ./Utils/wait-for-sqlserver.sh /folder_for_imports
 

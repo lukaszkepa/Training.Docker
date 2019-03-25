@@ -23,7 +23,7 @@ namespace Training.Docker.API.Services
 
         public async Task<Customer> CreateAsync(Customer customerOrder)
         {
-            var result =  await _repository.CreateAsync(customerOrder);
+            var result = await _repository.CreateAsync(customerOrder);
 
             await _bus.Publish(new CustomerOrderAdded
             {

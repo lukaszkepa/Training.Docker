@@ -9,7 +9,7 @@ namespace Training.Docker.RaportAPI.Controllers
 {
     [ApiController]
 
-    [Route("api/Raport")]
+    [Route("api/report")]
     public class RaportController : ControllerBase
     {
         readonly ApiContext context;
@@ -25,8 +25,7 @@ namespace Training.Docker.RaportAPI.Controllers
         }
 
 
-        [HttpGet("{customer}")]
-        [Route("ByCustomer/{customer}")]
+        [HttpGet("customer/{customer}")]
         public ActionResult<IEnumerable<OrdersAggregatedData>> GetByCustomer(string customer)
         {
             return context.OrdersAggregatedData
@@ -41,8 +40,7 @@ namespace Training.Docker.RaportAPI.Controllers
                ).ToList();
         }
 
-        [HttpGet("{date}")]
-        [Route("ByDate/{date}")]
+        [HttpGet("date/{date}")]
         public ActionResult<IEnumerable<OrdersAggregatedData>> Get(DateTime date)
         {
             return context.OrdersAggregatedData

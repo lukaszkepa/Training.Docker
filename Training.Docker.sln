@@ -5,19 +5,15 @@ VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Training.Docker.API", "Training.Docker.API\Training.Docker.API.csproj", "{4DD4D376-3094-4327-B9C2-365125B4419E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Training.Docker.CommandService", "Training.Docker.CommandService\Training.Docker.CommandService.csproj", "{477B18E0-C9D7-4176-8B21-F8A733DAE7C6}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Training.Docker.QueryService", "Training.Docker.QueryService\Training.Docker.QueryService.csproj", "{5F38EC25-81B5-411C-A0F8-5F60CE7CD572}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Training.Docker.DataCollectorService", "Training.Docker.DataCollectorService\Training.Docker.DataCollectorService.csproj", "{6240605E-4671-4374-8A55-39DAA38DAEDD}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Training.Docker.CommonLibs", "Training.Docker.CommonLibs\Training.Docker.CommonLibs.csproj", "{89082EB5-BB07-4206-8D00-F4EF66A8737E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Training.Docker.Models", "Training.Docker.Models\Training.Docker.Models.csproj", "{AB6D876B-AE35-4ACE-863B-439BC51FBA6A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Training.Docker.FromCommandToQueryPartNotificationService", "Training.Docker.FromCommandToQueryPartNotificationService\Training.Docker.FromCommandToQueryPartNotificationService.csproj", "{6228B3B4-0A47-4E96-9CD8-8446E5BB1CB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Training.Docker.RaportAPI", "Training.Docker.RaportAPI\Training.Docker.RaportAPI.csproj", "{C343638B-ECBC-49F4-A239-0F3A3FDAEFE4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Training.Docker.RaportAPI", "Training.Docker.RaportAPI\Training.Docker.RaportAPI.csproj", "{C343638B-ECBC-49F4-A239-0F3A3FDAEFE4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Training.Docker.DataCollectorService", "Training.Docker.DataCollectorService\Training.Docker.DataCollectorService.csproj", "{12E17C70-A5A6-456F-B480-4FD093330F85}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,18 +25,6 @@ Global
 		{4DD4D376-3094-4327-B9C2-365125B4419E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DD4D376-3094-4327-B9C2-365125B4419E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DD4D376-3094-4327-B9C2-365125B4419E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{477B18E0-C9D7-4176-8B21-F8A733DAE7C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{477B18E0-C9D7-4176-8B21-F8A733DAE7C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{477B18E0-C9D7-4176-8B21-F8A733DAE7C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{477B18E0-C9D7-4176-8B21-F8A733DAE7C6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5F38EC25-81B5-411C-A0F8-5F60CE7CD572}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5F38EC25-81B5-411C-A0F8-5F60CE7CD572}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5F38EC25-81B5-411C-A0F8-5F60CE7CD572}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5F38EC25-81B5-411C-A0F8-5F60CE7CD572}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6240605E-4671-4374-8A55-39DAA38DAEDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6240605E-4671-4374-8A55-39DAA38DAEDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6240605E-4671-4374-8A55-39DAA38DAEDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6240605E-4671-4374-8A55-39DAA38DAEDD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{89082EB5-BB07-4206-8D00-F4EF66A8737E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{89082EB5-BB07-4206-8D00-F4EF66A8737E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89082EB5-BB07-4206-8D00-F4EF66A8737E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -57,6 +41,10 @@ Global
 		{C343638B-ECBC-49F4-A239-0F3A3FDAEFE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C343638B-ECBC-49F4-A239-0F3A3FDAEFE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C343638B-ECBC-49F4-A239-0F3A3FDAEFE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12E17C70-A5A6-456F-B480-4FD093330F85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12E17C70-A5A6-456F-B480-4FD093330F85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12E17C70-A5A6-456F-B480-4FD093330F85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12E17C70-A5A6-456F-B480-4FD093330F85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
