@@ -1,6 +1,8 @@
 using System;
+using Polly;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using RabbitMQ.Client.Exceptions;
 
 namespace Training.Docker.CommonLibs.RabbitMQDAL
 {
@@ -32,14 +34,17 @@ namespace Training.Docker.CommonLibs.RabbitMQDAL
             Dispose(true);
         }
 
-        protected void ConnectWithRabbitMQInstance(string userName, string password, string hostname, string port, out IConnection conn, out IModel channel)
+        protected void ConnectWithRabbitMQInstance(string connectionString, out IConnection conn, out IModel channel)
         {
-            var connectionFactory = new ConnectionFactory();
-            connectionFactory.UserName = userName;
-            connectionFactory.Password = password;
-            connectionFactory.HostName = hostname;
-            connectionFactory.Port = Int32.Parse(port);
-            conn = connectionFactory.CreateConnection();
+            var policy = Policy.Handle<BrokerUnreachableException>()
+                .WaitAndRetry(3, attempt => TimeSpan.FromSeconds(attempt * 5));
+
+            var connectionFactory = new ConnectionFactory
+            {
+                Uri = new Uri(connectionString)
+            };
+
+            conn = policy.Execute(() => connectionFactory.CreateConnection());
             channel = conn.CreateModel();
         }
 
@@ -51,15 +56,9 @@ namespace Training.Docker.CommonLibs.RabbitMQDAL
 
         protected void ConnectWithQueue(IModel channel, string exchangeName, string queueName, string messageKey)
         {
-            // if (!String.IsNullOrEmpty(exchangeName))
-            //     channel.ExchangeDeclare(exchangeName, ExchangeType.Direct);
-
-            // channel.QueueDeclare(queueName, true, false, false, null);
-
-            // if (!String.IsNullOrEmpty(exchangeName))
-            //     channel.QueueBind(queueName, exchangeName, messageKey);
             channel.ExchangeDeclare(exchangeName, ExchangeType.Topic, true);
+            channel.QueueDeclare(queueName, true, false, false, null);
             channel.QueueBind(queueName, exchangeName, messageKey);            
-        }                  
+        }                 
     }
 }

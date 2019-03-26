@@ -10,22 +10,16 @@ namespace Training.Docker.CommonLibs.RabbitMQDAL
 {
     public class MessagesPublisher : RabbitMQConnectivityBasicTasks
     {
-        private string _userName = String.Empty;
-        private string _password = String.Empty;
-        private string _hostName = String.Empty;
-        private string _port = String.Empty;
+        private string _connectionString;
         private string _exchangeName = String.Empty;
         private bool _isInstantiatedCorrectly = false;        
 
-        public MessagesPublisher(string userName, string password, string hostName, string port, string exchangeName)
+        public MessagesPublisher(string connectionString, string exchangeName)
         {
-            this._userName = userName;
-            this._password = password;
-            this._hostName = hostName;
-            this._port = port;
+            this._connectionString = connectionString;
             this._exchangeName = exchangeName;
 
-            ConnectWithRabbitMQInstance(this._userName, this._password, this._hostName, this._port, out this._conn, out this._channel);
+            ConnectWithRabbitMQInstance(this._connectionString, out this._conn, out this._channel);
             if ((this._conn == null) || (this._channel == null))
                 return;
 

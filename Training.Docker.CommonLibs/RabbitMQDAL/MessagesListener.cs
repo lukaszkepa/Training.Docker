@@ -12,26 +12,20 @@ namespace Training.Docker.CommonLibs.RabbitMQDAL
 {
     public class MessagesListener : RabbitMQConnectivityBasicTasks
     {
-        private string _userName = String.Empty;
-        private string _password = String.Empty;
-        private string _hostName = String.Empty;
-        private string _port = String.Empty;
+        private string _connectionString = String.Empty;
         private string _exchangeName = String.Empty;
         private string _queueName = String.Empty;
         private string _messageKey = String.Empty;
         private bool _isInstantiatedCorrectly = false;
 
-        public MessagesListener(string userName, string password, string hostName, string port, string exchangeName, string queueName, string messageKey)
+        public MessagesListener(string connectionString, string exchangeName, string queueName, string messageKey)
         {
-            this._userName = userName;
-            this._password = password;
-            this._hostName = hostName;
-            this._port = port;
+            this._connectionString = connectionString;
             this._exchangeName = exchangeName;
             this._queueName = queueName;
             this._messageKey = messageKey;
 
-            ConnectWithRabbitMQInstance(this._userName, this._password, this._hostName, this._port, out this._conn, out this._channel);
+            ConnectWithRabbitMQInstance(this._connectionString, out this._conn, out this._channel);
             if ((this._conn == null) || (this._channel == null))
                 return;
 

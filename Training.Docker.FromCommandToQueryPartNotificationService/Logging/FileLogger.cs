@@ -8,9 +8,22 @@ namespace Training.Docker.FromCommandToQueryPartNotificationService.Logging
     {
         private static object _lock = new Object();
         private FileLoggerConfig _config = null;
+        private string _fullPath = null;
+
         public FileLogger(FileLoggerConfig config)
         {
             this._config = config;
+
+            _fullPath = Path.GetFullPath(this._config.LogFile);
+            var dir = Path.GetDirectoryName(_fullPath);
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+            if (!File.Exists(_fullPath))
+            {
+                File.Create(_fullPath);
+            }
         }
 
         public IDisposable BeginScope<TState>(TState state)
@@ -36,7 +49,7 @@ namespace Training.Docker.FromCommandToQueryPartNotificationService.Logging
                     StreamWriter sw = null;
                     try
                     {
-                        fs = new FileStream(this._config.LogFile, FileMode.Append);
+                        fs = new FileStream(_fullPath, FileMode.Append);
                         sw = new StreamWriter(fs);
                         sw.WriteLine(String.Format("{0} - {1} - {2}", DateTime.Now, logLevel.ToString(), formatter(state, exception)));
                     }

@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Polly;
 using Rebus.Config;
+using Rebus.Injection;
 using Rebus.ServiceProvider;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
 using System.Reflection;
 using Training.Docker.API.Services;
 using Training.Docker.API.Settings;
@@ -49,6 +52,9 @@ namespace Training.Docker.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            var policy = Policy.Handle<ResolutionException>()
+                .WaitAndRetry(3, attempt => TimeSpan.FromSeconds(attempt * 5));
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -58,7 +64,7 @@ namespace Training.Docker.API
             app.UseSwagger()
                .UseSwaggerUI(s => s.SwaggerEndpoint("/swagger/v1/swagger.json", "Docker Training API"));
 
-            app.UseRebus();
+            policy.Execute(() => app.UseRebus());
         }
     }
 }

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.Json;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 using Training.Docker.FromCommandToQueryPartNotificationService.Logging;
 using Training.Docker.FromCommandToQueryPartNotificationService.MessageProcessing;
 
@@ -17,16 +15,17 @@ namespace Training.Docker.FromCommandToQueryPartNotificationService
             var builder = new HostBuilder();
 
             builder.ConfigureAppConfiguration((hostingContext, configuration) => {
-                configuration.SetBasePath(hostingContext.HostingEnvironment.ContentRootPath);
-                configuration.AddJsonFile("/RabbitMQListenerGenericHost/config/appsettings.json");
+                configuration.SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
+                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                    .AddEnvironmentVariables();
             });
 
             builder.ConfigureServices((hostingContext, services) => {
                 services.AddOptions();
                 services.Configure<FileLoggerConfig>(hostingContext.Configuration.GetSection("FileLoggerConfig"));
-                services.Configure<RabbitMQConfig>(hostingContext.Configuration.GetSection("RabbitMQConfig"));
-                services.Configure<MongoDBConfig>(hostingContext.Configuration.GetSection("MongoDBConfig"));
-                services.Configure<SqlServerDBConfig>(hostingContext.Configuration.GetSection("SqlServerDBConfig"));
+                services.Configure<RabbitMQConfig>(hostingContext.Configuration.GetSection("RabbitMQ"));
+                services.Configure<MongoDBConfig>(hostingContext.Configuration.GetSection("MongoDB"));
+                services.Configure<SqlServerDBConfig>(hostingContext.Configuration.GetSection("SqlServer"));
                 services.AddSingleton<ILoggerFactory, FileLoggerFactory>();
                 services.AddSingleton<IHostedService, MessagesProcessor>();
             });

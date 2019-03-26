@@ -17,7 +17,10 @@ namespace Training.Docker.FromCommandToQueryPartNotificationService.MessageProce
         private IOptions<MongoDBConfig> _mongoDBConfig = null;
         private IOptions<SqlServerDBConfig> _sqlServerDBConfig = null;
         private MessagesListener _messagesListener = null;
-        public MessagesProcessor(ILogger<MessagesProcessor> logger, IOptions<RabbitMQConfig> rabbitMQConfig, IOptions<MongoDBConfig> mongoDBConfig, IOptions<SqlServerDBConfig> sqlServerDBConfig)
+        public MessagesProcessor(ILogger<MessagesProcessor> logger,
+            IOptions<RabbitMQConfig> rabbitMQConfig,
+            IOptions<MongoDBConfig> mongoDBConfig,
+            IOptions<SqlServerDBConfig> sqlServerDBConfig)
         {
             this._logger = logger;
             this._rabbitMQConfig = rabbitMQConfig;
@@ -27,10 +30,7 @@ namespace Training.Docker.FromCommandToQueryPartNotificationService.MessageProce
 
         public void ProcessMessageFromMessageBroker()
         {
-            this._messagesListener = new MessagesListener(this._rabbitMQConfig.Value.UserName, 
-                this._rabbitMQConfig.Value.Password, 
-                this._rabbitMQConfig.Value.HostName, 
-                this._rabbitMQConfig.Value.Port, 
+            this._messagesListener = new MessagesListener(this._rabbitMQConfig.Value.ConnectionString,
                 this._rabbitMQConfig.Value.ExchangeName, 
                 this._rabbitMQConfig.Value.QueueName,
                 this._rabbitMQConfig.Value.MessageKey);
@@ -57,19 +57,16 @@ namespace Training.Docker.FromCommandToQueryPartNotificationService.MessageProce
                 RequestId = Guid.Parse(json["RequestId"].ToString()),
                 CustomerOrderId = json["CustomerOrderId"].ToString()
             };
-            Training.Docker.CommonLibs.MongoDbDAL.Repository<Customer> repositoryMongoDB = new Training.Docker.CommonLibs.MongoDbDAL.Repository<Customer>(
-                String.Format("mongodb://{0}:{1}", this._mongoDBConfig.Value.Host, this._mongoDBConfig.Value.Port),
-                this._mongoDBConfig.Value.Database,
-                this._mongoDBConfig.Value.Collection);
+            CommonLibs.MongoDbDAL.Repository<Customer> repositoryMongoDB = new Training.Docker.CommonLibs.MongoDbDAL.Repository<Customer>(
+                this._mongoDBConfig.Value.ConnectionString,
+                this._mongoDBConfig.Value.DatabaseName,
+                CommonLibs.MongoDbDAL.Collections.Orders);
             Customer customer = repositoryMongoDB.GetAsync(customerOrderAdded.CustomerOrderId).Result;
             Decimal totalPrice = 0.0M;
             foreach(var orderDetail in customer.Order.OrderDetails)
                 totalPrice += ((Decimal)orderDetail.UnitPrice) * ((int)orderDetail.Amount); 
             Training.Docker.CommonLibs.SqlServerDBDAL.RepositoryADO repositorySqlDB = new Training.Docker.CommonLibs.SqlServerDBDAL.RepositoryADO(
-                this._sqlServerDBConfig.Value.DataSource,
-                this._sqlServerDBConfig.Value.InitialCatalog,
-                this._sqlServerDBConfig.Value.UserID,
-                this._sqlServerDBConfig.Value.Password);
+                this._sqlServerDBConfig.Value.ConnectionString);
             repositorySqlDB.InsertCustomerOrderAggregatedData(customer.Name, customer.Order.OrderPlacementDate, totalPrice);
         }
     }
