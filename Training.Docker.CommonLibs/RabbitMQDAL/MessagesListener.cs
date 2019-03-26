@@ -55,10 +55,7 @@ namespace Training.Docker.CommonLibs.RabbitMQDAL
                     try
                     {
                         byte[] objectBasedMsg = eventArgs.Body;
-
-                        BinaryFormatter bf = new BinaryFormatter();
-                        ms = new MemoryStream(objectBasedMsg);
-                        string sMessage = (string)bf.Deserialize(ms);
+                        var sMessage = System.Text.Encoding.UTF8.GetString(objectBasedMsg);
                         JObject message = JObject.Parse(sMessage);
                         ((EventingBasicConsumer)cons).Model.BasicAck(eventArgs.DeliveryTag, false);
                         messageHandler(message);

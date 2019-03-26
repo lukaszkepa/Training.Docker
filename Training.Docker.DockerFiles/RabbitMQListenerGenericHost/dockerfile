@@ -3,11 +3,16 @@ FROM microsoft/dotnet:aspnetcore-runtime
 RUN mkdir /RabbitMQListenerGenericHost
 RUN mkdir /RabbitMQListenerGenericHost/logs
 RUN mkdir /RabbitMQListenerGenericHost/config
+RUN mkdir /RabbitMQListenerGenericHost/runtimes
+RUN mkdir /RabbitMQListenerGenericHost/runtimes/unix
+RUN mkdir /RabbitMQListenerGenericHost/runtimes/unix/lib
+RUN mkdir /RabbitMQListenerGenericHost/runtimes/unix/lib/netcoreapp2.1
 
 VOLUME ["/RabbitMQListenerGenericHost/logs"]
 VOLUME ["/RabbitMQListenerGenericHost/config"]
 
 ADD ./* /RabbitMQListenerGenericHost/
+ADD ./runtimes/unix/lib/netcoreapp2.1/* /RabbitMQListenerGenericHost/runtimes/unix/lib/netcoreapp2.1/
 
 WORKDIR /RabbitMQListenerGenericHost
 ENTRYPOINT ["dotnet", "Training.Docker.FromCommandToQueryPartNotificationService.dll"]

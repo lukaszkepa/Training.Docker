@@ -2,4 +2,4 @@
 sudo docker build --rm -t dockercourse:rabbitmqlistenergenerichostimage -f ../../Training.Docker.DockerFiles/RabbitMQListenerGenericHost/dockerfile .
 --In order to have following command start docker container, copy appsettings.json (located in deployment package folder) to the one mapped to /RabbitMQListenerGenericHost/config. In our case it is
 --/home/adamcio/Desktop/config
-sudo docker run --name rabbitmqlistenergenerichost01 -d -it -v /home/adamcio/Desktop/logs:/RabbitMQListenerGenericHost/logs -v /home/adamcio/Desktop/config:/RabbitMQListenerGenericHost/config --network training-net --network-alias rabbitmqlistenergenerichost01host dockercourse:rabbitmqlistenergenerichostimage
+sudo docker run --name rabbitmqlistenergenerichost01 -d -v /home/adamcio/Desktop/logs:/RabbitMQListenerGenericHost/logs -v /home/adamcio/Desktop/config:/RabbitMQListenerGenericHost/config --network training-net --network-alias rabbitmqlistenergenerichost01host dockercourse:rabbitmqlistenergenerichostimage
