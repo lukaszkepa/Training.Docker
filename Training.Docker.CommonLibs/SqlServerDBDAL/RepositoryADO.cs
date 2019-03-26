@@ -71,8 +71,15 @@ namespace Training.Docker.CommonLibs.SqlServerDBDAL
         {
             if (!this._isDisposed)
             {
-                if (this._conn != null)
-                    this._conn.Close();
+                try
+                {
+                    if ((this._conn != null) && (this._conn.State == ConnectionState.Open))
+                        this._conn.Close();
+                }
+                catch
+                {
+                    this._conn = null;
+                }
 
                 if (isExpliciteInvoked)
                     GC.SuppressFinalize(this);

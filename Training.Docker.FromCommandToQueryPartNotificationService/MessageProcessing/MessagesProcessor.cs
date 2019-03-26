@@ -34,7 +34,7 @@ namespace Training.Docker.FromCommandToQueryPartNotificationService.MessageProce
                 this._rabbitMQConfig.Value.ExchangeName, 
                 this._rabbitMQConfig.Value.QueueName,
                 this._rabbitMQConfig.Value.MessageKey);
-            this._messagesListener.StartListeningForMessages((json) => Console.WriteLine(json.ToString()));
+            this._messagesListener.StartListeningForMessages((json) => DoMessageProcessing(json));
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -53,7 +53,10 @@ namespace Training.Docker.FromCommandToQueryPartNotificationService.MessageProce
 
         private void DoMessageProcessing(JObject json)
         {
-            CustomerOrderAdded customerOrderAdded = JObject.Parse(json.ToString()).ToObject<CustomerOrderAdded>();
+            CustomerOrderAdded customerOrderAdded = new CustomerOrderAdded {
+                RequestId = Guid.Parse(json["RequestId"].ToString()),
+                CustomerOrderId = json["CustomerOrderId"].ToString()
+            };
             Training.Docker.CommonLibs.MongoDbDAL.Repository<Customer> repositoryMongoDB = new Training.Docker.CommonLibs.MongoDbDAL.Repository<Customer>(
                 String.Format("mongodb://{0}:{1}", this._mongoDBConfig.Value.Host, this._mongoDBConfig.Value.Port),
                 this._mongoDBConfig.Value.Database,
