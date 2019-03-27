@@ -1,0 +1,63 @@
+version: '3.7'
+
+services:
+  training-api:
+    image: training-api:latest
+    build:
+      dockerfile: Training.Docker.API/Dockerfile
+      context: .
+    depends_on:
+      - training-rabbitmq
+      - training-mongo
+    env_file:
+      - ./dev.env
+    ports:
+      - "5000:80"
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
+  training-service:
+    image: training-service:latest
+    build:
+      dockerfile: Training.Docker.FromCommandToQueryPartNotificationService/Dockerfile
+      context: .
+    depends_on:
+      - training-rabbitmq
+      - training-sqlserver
+      - training-mongo
+    env_file:
+      - ./dev.env
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
+  training-reportapi:
+    image: training-reportapi:latest
+    build:
+      dockerfile: Training.Docker.RaportAPI/Dockerfile
+      context: .
+    depends_on:
+      - training-sqlserver
+    env_file:
+      - ./dev.env
+    ports:
+      - "5001:80"
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
+networks:
+  training-net:

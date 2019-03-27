@@ -1,0 +1,42 @@
+version: '3.7'
+
+services:
+  training-mongo:
+    image: docker.io/mongo:latest
+    volumes:
+      - mongo-data:/data/db/
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+  training-sqlserver:
+    image: training-sqlserver:latest
+    build:
+      dockerfile: Training.Docker.DockerFiles/SqlServer/Dockerfile
+      context: .
+    volumes:
+      - sqlserver-data:/var/opt/mssql/data
+    ports:
+      - "14433:1433"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+  training-rabbitmq:
+    image: docker.io/rabbitmq:3-management
+    ports:
+      - "15672:15672"
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
+networks:
+  training-net:
+
+volumes:
+  sqlserver-data:
+  mongo-data:
