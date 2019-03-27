@@ -26,7 +26,7 @@ namespace Training.Docker.FromCommandToQueryPartNotificationService
                 services.Configure<RabbitMQConfig>(hostingContext.Configuration.GetSection("RabbitMQ"));
                 services.Configure<MongoDBConfig>(hostingContext.Configuration.GetSection("MongoDB"));
                 services.Configure<SqlServerDBConfig>(hostingContext.Configuration.GetSection("SqlServer"));
-                services.AddSingleton<ILoggerFactory, FileLoggerFactory>();
+                //services.AddSingleton<ILoggerFactory, FileLoggerFactory>();
                 services.AddSingleton<IHostedService, MessagesProcessor>();
             });
 
